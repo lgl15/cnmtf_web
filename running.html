@@ -23,25 +23,46 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -304,6 +325,12 @@ div.tocify {
 </div>
 
 
+<style type="text/css">
+
+body{
+  font-size: 15pt !important;;
+}
+</style>
 <hr />
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -318,53 +345,53 @@ div.tocify {
 <p><br></p>
 <p>You can run cNMTF with one single function: <code>score.cnmtf</code>. This function reads your input data, finds the optimal parameters for the algorithm and provides you with the clusters of patients and the SNV scores, <span class="math inline">\(\Omega\)</span>.</p>
 <p><br></p>
-<pre class="r"><code>library(&#39;doParallel&#39;)
-library(&quot;igraph&quot;)
-library(&#39;cnmtf&#39;)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;doParallel&#39;</span>)
+<span class="kw">library</span>(<span class="st">&quot;igraph&quot;</span>)
+<span class="kw">library</span>(<span class="st">&#39;cnmtf&#39;</span>)
 
-    score.cnmtf( R = R, #Relationship matrix
-                 out = out, #Categorical outcome variable
-                 pop = pop, #Population variable
-                 log.file = &quot;logfile_my_experiment&quot;, #Log-file to track the performance
+    <span class="kw">score.cnmtf</span>( <span class="dt">R =</span> R, <span class="co">#Relationship matrix</span>
+                 <span class="dt">out =</span> out, <span class="co">#Categorical outcome variable</span>
+                 <span class="dt">pop =</span> pop, <span class="co">#Population variable</span>
+                 <span class="dt">log.file =</span> <span class="st">&quot;logfile_my_experiment&quot;</span>, <span class="co">#Log-file to track the performance</span>
 
-                 #Variables to Save/Load data and workspaces
-                 name.exp = &quot;my_experiment&quot;, #Name of experiment to save files
-                 work.dat = &quot;./test/&quot;, #Folder to save and load workspaces
+                 <span class="co">#Variables to Save/Load data and workspaces</span>
+                 <span class="dt">name.exp =</span> <span class="st">&quot;my_experiment&quot;</span>, <span class="co">#Name of experiment to save files</span>
+                 <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Folder to save and load workspaces</span>
 
-                 #Number of clusters
-                 define.k = &quot;method&quot;, #Method to define k1
-                 k1 = c(2,3,5,8,10,15,20), #Number of clusters of SNVs
-                 k2 = nlevels(out), #Number of clusters of patients
+                 <span class="co">#Number of clusters</span>
+                 <span class="dt">define.k =</span> <span class="st">&quot;method&quot;</span>, <span class="co">#Method to define k1</span>
+                 <span class="dt">k1 =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="co">#Number of clusters of SNVs</span>
+                 <span class="dt">k2 =</span> <span class="kw">nlevels</span>(out), <span class="co">#Number of clusters of patients</span>
 
-                 #Penalisation parameters
-                 wparameters = list( gamma1 = 0.5, #Weight for the SNV network, Lu
-                                     gamma2 = 1, #Weight for the outcome matrix, Vo
-                                     gamma3 = 1), #Weight for the kernel matrix, A
-                 save.parameters = TRUE, #Save parameters to file
-                 run.t.par = 4, #Number of repetitions for parameters fitting
-                 max.try0 = 4,  #Maximum number of tries to fit the parameter
-                 snps.known = NULL, #List of known SNV associated with the trait
+                 <span class="co">#Penalisation parameters</span>
+                 <span class="dt">wparameters =</span> <span class="kw">list</span>( <span class="dt">gamma1 =</span> <span class="fl">0.5</span>, <span class="co">#Weight for the SNV network, Lu</span>
+                                     <span class="dt">gamma2 =</span> <span class="dv">1</span>, <span class="co">#Weight for the outcome matrix, Vo</span>
+                                     <span class="dt">gamma3 =</span> <span class="dv">1</span>), <span class="co">#Weight for the kernel matrix, A</span>
+                 <span class="dt">save.parameters =</span> <span class="ot">TRUE</span>, <span class="co">#Save parameters to file</span>
+                 <span class="dt">run.t.par =</span> <span class="dv">4</span>, <span class="co">#Number of repetitions for parameters fitting</span>
+                 <span class="dt">max.try0 =</span> <span class="dv">4</span>,  <span class="co">#Maximum number of tries to fit the parameter</span>
+                 <span class="dt">snps.known =</span> <span class="ot">NULL</span>, <span class="co">#List of known SNV associated with the trait</span>
 
-                 #Variables to control performance of the algorithm
-                 parallel.opt = TRUE, #Run some instances of the algorithm in parallel
-                 n.cores = 3, #Number of cores to use in the parallel processing
-                 init = 0, #Type of seeding/initialisation of matrices in the algorithm
-                 do.U = TRUE, #Perform clustering of SNPs
-                 calcObj = 20, #Check convergency every 20 iterations
-                 calcObj2 = 40, #Start checking convergency after first 40 iterations
-                 iters = 300, #Number of iterations
-                 run.t.exp = 10, #Number of repetitions for the experiment
-                 display.iters = FALSE, #Display the iterations of function cnmtf
+                 <span class="co">#Variables to control performance of the algorithm</span>
+                 <span class="dt">parallel.opt =</span> <span class="ot">TRUE</span>, <span class="co">#Run some instances of the algorithm in parallel</span>
+                 <span class="dt">n.cores =</span> <span class="dv">3</span>, <span class="co">#Number of cores to use in the parallel processing</span>
+                 <span class="dt">init =</span> <span class="dv">0</span>, <span class="co">#Type of seeding/initialisation of matrices in the algorithm</span>
+                 <span class="dt">do.U =</span> <span class="ot">TRUE</span>, <span class="co">#Perform clustering of SNPs</span>
+                 <span class="dt">calcObj =</span> <span class="dv">20</span>, <span class="co">#Check convergency every 20 iterations</span>
+                 <span class="dt">calcObj2 =</span> <span class="dv">40</span>, <span class="co">#Start checking convergency after first 40 iterations</span>
+                 <span class="dt">iters =</span> <span class="dv">300</span>, <span class="co">#Number of iterations</span>
+                 <span class="dt">run.t.exp =</span> <span class="dv">10</span>, <span class="co">#Number of repetitions for the experiment</span>
+                 <span class="dt">display.iters =</span> <span class="ot">FALSE</span>, <span class="co">#Display the iterations of function cnmtf</span>
 
-                 #Randomisations
-                 score.pvalues = TRUE, #Estimate p-values for the scores
-                 random.parallel = TRUE, #Run each randomisation in parallel
-                 randomisations = 100, #Number of randomisations
+                 <span class="co">#Randomisations</span>
+                 <span class="dt">score.pvalues =</span> <span class="ot">TRUE</span>, <span class="co">#Estimate p-values for the scores</span>
+                 <span class="dt">random.parallel =</span> <span class="ot">TRUE</span>, <span class="co">#Run each randomisation in parallel</span>
+                 <span class="dt">randomisations =</span> <span class="dv">100</span>, <span class="co">#Number of randomisations</span>
 
-                 #Construction of penalisation terms
-                 file.Gu = &quot;./test/Gu_ppi_test.RData&quot; #Workspace with SNV-SNV network
+                 <span class="co">#Construction of penalisation terms</span>
+                 <span class="dt">file.Gu =</span> <span class="st">&quot;./test/Gu_ppi_test.RData&quot;</span> <span class="co">#Workspace with SNV-SNV network</span>
 
-            )</code></pre>
+            )</code></pre></div>
 <p><strong>The arguments for this function are explained as follows.</strong></p>
 <p><br></p>
 <hr />
