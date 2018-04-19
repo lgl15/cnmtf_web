@@ -1,0 +1,20 @@
+name: R Markdown Websites Tutorial
+navbar:
+  title: Home
+  left:
+  - text: Your input data
+    href: preprocessing.html
+  - text: Running cNMTF
+    href: running.html
+  - text: Prioritising SNVs
+    href: prioritising.html
+  - text: Extras
+    href: extras.html
+output_dir: .
+output:
+  html_document:
+    theme: yeti
+    highlight: textmate
+    lib_dir: site_libs
+    self_contained: no
+

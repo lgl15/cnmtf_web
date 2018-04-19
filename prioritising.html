@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Prioritising SNVs</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="preprocessing.html">Your input data</a>
+</li>
+<li>
+  <a href="running.html">Running cNMTF</a>
+</li>
+<li>
+  <a href="prioritising.html">Prioritising SNVs</a>
+</li>
+<li>
+  <a href="extras.html">Extras</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Prioritising SNVs</h1>
+
+</div>
+
+
+<hr />
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>After running the main function of cNMTF, <code>score.cnmtf</code> you have a workspace with the consensus clusters of patients and SNV scores. In this section we will compare the SNV scores between clusters to observe the relative importance of each SNV on a trait. Those SNVs with high delta score, <span class="math inline">\(\Delta \Omega\)</span>, will be prioritised for further analysis:</p>
+<p><br></p>
+<p><img src="images/cNMTF.png" width="700px"></p>
+<p><br></p>
+<hr />
+</div>
+<div id="the-delta-snv-score" class="section level2">
+<h2>The delta SNV score</h2>
+<p><br></p>
+<p>In our results, we can expect clusters of patients enriched either in cases or controls because we are integrating <span class="math inline">\(V_o\)</span>. The difference of SNV scores between the cluster of cases and the cluster of controls is calculated for the <span class="math inline">\(s\)</span>-th SNV as <span class="math inline">\(\Delta \Omega_{s} = \Omega_{s,2} - \Omega_{s,1}\)</span>.</p>
+<p><br></p>
+<p>The function <code>analyze.cnmtf</code> will read the clustering results of your experiment(s) and calculate the delta scores:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;igraph&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;ade4&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;ComplexHeatmap&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;VennDiagram&quot;</span>)
+
+<span class="kw">analyze.cnmtf</span> (  <span class="dt">trait.project =</span> <span class="st">&quot;test&quot;</span>, <span class="co">#Trait under analysis</span>
+                 <span class="dt">name.exp =</span> <span class="kw">c</span>(<span class="st">&quot;my_experiment&quot;</span>, <span class="co">#Experiment under analysis </span>
+                 <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Folder with the results of score.cnmtf</span>
+                 <span class="dt">alpha.cnmtf =</span> <span class="fl">0.005</span>,   <span class="co">#Significance level of the scores</span>
+                 <span class="dt">d.conf =</span> <span class="ot">NULL</span>, <span class="co">#Optional. Confounder variables.</span>
+                 <span class="dt">snps.known =</span> <span class="ot">NULL</span>, <span class="co">#Optional. List of SNVs associated with the disease</span>
+                 <span class="dt">snps.known2 =</span> <span class="ot">NULL</span>, <span class="co">#Optional. A second list of SNVs.</span>
+                 <span class="dt">tmap =</span> <span class="ot">NULL</span>) <span class="co">#Mapping of SNPs to genes, chr and genomic position</span></code></pre></div>
+<p><br></p>
+<p>This function performs the following tasks:</p>
+<ul>
+<li>Assesses the significance of the delta scores.</li>
+<li>Creates Manhattan plots for the dispersion of delta SNV scores.</li>
+<li>Computes Logistic Regression Models (LRMs) for the same set of variants.</li>
+<li>Compares the prioritised variants of cNMTF and LRMs using Venn diagrams.</li>
+</ul>
+<p><strong>The arguments for this function are explained below.</strong></p>
+<p><br></p>
+<div id="the-input-data" class="section level3">
+<h3>The input data</h3>
+<p>The workspaces generated with <code>score.cnmtf</code> will be reading from <code>work.dat</code>. You must declare the name of the experiment <code>name.exp = &quot;my_experiment&quot;</code>. The output files will be labelled with the argument <code>trait.project = &quot;test&quot;</code>.</p>
+<p><br></p>
+</div>
+<div id="significance-of-the-delta-scores" class="section level3">
+<h3>Significance of the delta scores</h3>
+<p>In the previous section, we generated 100 randomisations of your phenotypes. These randomisations will define the null distribution of <span class="math inline">\(\Delta \Omega\)</span> in your data. Here, we set a significance level, <code>alpha.cnmtf = 0.005</code>, and prioritise variants in the tails of the distribution. Thus, cut-off points at <span class="math inline">\(( \frac{\alpha}{2}, 1 - \frac{\alpha}{2} )\)</span> are obtained from the cumulative distribution function.</p>
+<p><br></p>
+</div>
+<div id="optional-arguments" class="section level3">
+<h3>Optional arguments</h3>
+<p>The function <code>analyze.cnmtf</code> will also fit a LRM for each variant to explain the status of the patient. As an option, you can provide a dataframe of patients by confounder variables to correct the results of the LRM (<code>d.conf</code>). You can provide two lists of variants (<em>e.g.,</em> SNVs known to be associated with the outcome) and the function will highlight those variants in the Manhattan plots (<code>snps.known</code> and <code>snps.known2</code> will be coloured in black and green, respectively). The list of variants provided in <code>snps.known</code> will also be included in Venn diagrams comparing LRMs and cNMTF results.</p>
+<p><br></p>
+</div>
+<div id="main-outputs" class="section level3">
+<h3>Main outputs</h3>
+<p>In the working directory <code>work.dat</code> you will find three main files. The first file, <code>delta_results_my_experiment.pdf</code> contains Manhattan plots for the dispersion of delta SNV scores and the p-values from LRMs.</p>
+<p><br></p>
+<center>
+<p><img src="images/manhattan.png" width="400px"></p>
+<p><strong>Figure. Manhattan plots for the p-values from LRM (left) and delta SNV scores from cNMTF (right)</strong>. Variants are ordered according to their chromosomal location. Variants beyond the significance cut-offs (dotted lines) are prioritised by both methods, cNMTF and LRM.</p>
+</center>
+<p><br></p>
+<p>The second file, <code>cluster_results_my_experiment.pdf</code> contains dispersion plots for the clusters of patients, variants and the SNV scores.</p>
+<center>
+<p><img src="images/clusters.png" width="400px"></p>
+<p><strong>Figure. Clusters of patients (left) and SNV scores from <span class="math inline">\(\Omega\)</span> matrix (right)</strong>. Patients are coloured by their outcome (red: cases, blue: controls). The variants in the second plot are coloured by their minor allele frequency (MAF) (red: rare (MAF &lt; 0.01), orange: low-frequency (0.01 &lt; MAF &lt; 0.05), yellow: common variants (MAF &gt; 0.05)) .</p>
+</center>
+<p>The third main file, <code>score_results_my_experiment.RData</code> is a workspace containing the set of prioritised variants. We will use this file to create an output table of annotated variants for your analysis.</p>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="prioritised-variants" class="section level2">
+<h2>Prioritised variants</h2>
+<p>In this final step we use the function <code>annotate.results</code> to map the variants to genes and add their functional annotations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;RDAVIDWebService&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;biomaRt&quot;</span>)
+
+t.res =<span class="st"> </span><span class="kw">annotate.results</span>( <span class="dt">name.exp =</span> <span class="st">&quot;my_experiment&quot;</span>, <span class="co">#Define experiment id</span>
+                          <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Working directory</span>
+                          <span class="dt">add.david.annotations =</span> <span class="ot">TRUE</span>, <span class="co">#Use DAVID web service</span>
+                          <span class="dt">email.david =</span> <span class="st">&quot;myemail@account.com&quot;</span>, <span class="co">#Email registered in DAVID.</span>
+                          <span class="dt">add.ensemble.conseq =</span> <span class="ot">FALSE</span>, <span class="co">#Add SNV consequences from ENSEMBL</span>
+                          <span class="dt">tmap =</span> tmap, <span class="co">#Mapping of SNPs to genes, chr and genomic position</span>
+                          <span class="dt">file.LD =</span> <span class="st">&quot;./test/fileLD.RData&quot;</span>, <span class="co">#Workspace with pairwise LD</span>
+                          <span class="dt">ld.tao =</span> <span class="fl">0.8</span> <span class="co">#Treshold of LD</span>
+                          <span class="dt">snps.known =</span> <span class="ot">NULL</span>, <span class="co">#Optional. List of known associations.</span>
+                          <span class="dt">snps.known2 =</span> <span class="ot">NULL</span>, <span class="co">#Optional. A second list of SNVs.</span>
+)
+    
+
+<span class="co">#Extract table of prioritised variants</span>
+    t.snvs =<span class="st"> </span>t.res[[<span class="dv">1</span>]]</code></pre></div>
+<p><br></p>
+<p>The annotations are retrieved from the DAVID web service using functions from the library <code>RDAVIDWebService</code> (Fresno <em>et al.,</em> 2013). If you want to use their web service you must <a href="https://david.ncifcrf.gov/webservice/register.htm">register</a> your email account(<code>email.david</code>), otherwise you can omit this step: <code>add.david.annotations = FALSE</code>.</p>
+<p><br></p>
+<p>Other optional fields to be included in the final table of prioritised variants are:</p>
+<ul>
+<li>The SNV consequences from ENSEMBL, <code>add.ensemble.conseq = TRUE</code></li>
+<li>A list of SNVs in high linkage-disequilibrium with the prioritised variant. You must set the threshold <code>ld.tao = 0.8</code> to search these SNVs within the same gene region.</li>
+</ul>
+<p><br></p>
+<pre><code>&gt; t.snvs
+
+        snp    dscore known entrezgene pvalue trait   ID  Gene.Name OMIM_DISEASE 
+1 rs9568238  2.605395     -       5925      0  test 5925  RB1       109800~Bladder cancer
+2 rs4238327 -3.507768     -       4734      0  test 4734 NEDD4      -
+
+KEGG_PATHWAY                                GOTERM_BP_DIRECT
+1 hsa04110:Cell cycle,hsa05161:Hepatitis B  GO:0000075~cell cycle checkpoint
+2 hsa04120:Ubiquitin mediated proteolysis   GO:0002250~adaptive immune response
+</code></pre>
+<p><br></p>
+<p>The function <code>annotate.results</code> prints the following tables in <code>work.dat</code>:</p>
+<ul>
+<li><code>prioritised_snvs_my_experiment.csv</code>: The table of prioritised variants</li>
+<li><code>prioritised_genes_my_experiment.txt</code>: The set of mutated genes and their prioritised variants.</li>
+<li><code>enrichment_analyisis_test.txt</code>: Enrichment analysis from DAVID web service for the mutated genes.</li>
+</ul>
+<p><br></p>
+<p>This is the end of the documentation for <strong><em>cnmtf</em></strong> package. A full script concatenating these functions is presented <a href="extras.html">here</a>.</p>
+<p>You are very welcome to submit any query by contacting the <a href="index.html">corresponding author</a> and follow the development of this package in <a href="https://github.com/lgl15/cnmtf">Github</a>.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

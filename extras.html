@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Extras</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="preprocessing.html">Your input data</a>
+</li>
+<li>
+  <a href="running.html">Running cNMTF</a>
+</li>
+<li>
+  <a href="prioritising.html">Prioritising SNVs</a>
+</li>
+<li>
+  <a href="extras.html">Extras</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Extras</h1>
+
+</div>
+
+
+<hr />
+<p>This <code>R</code> script links together the most relevant functions for <a href="preprocessing.html">preprocessing data</a>, <a href="running.html">running cNMTF</a> and <a href="prioritising.html">prioritising variants</a>.</p>
+<p><br></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">###############################################################
+<span class="co"># Full executable script for cNMTF</span>
+<span class="co">#</span>
+<span class="co"># Corresponding author:</span>
+<span class="co"># Luis Leal, Imperial College London, email: lgl15@imperial.ac.uk</span>
+###############################################################
+
+
+<span class="co">#-------------------------------------------------</span>
+<span class="co"># 1. Installation</span>
+<span class="co">#-------------------------------------------------</span>
+
+
+            <span class="co">#Clean your current workspace</span>
+
+            <span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>()) ; <span class="kw">gc</span>()
+
+            <span class="co">#Load libraries</span>
+
+            <span class="kw">library</span>(<span class="st">&quot;devtools&quot;</span>) <span class="co">#For the installation of cnmtf package</span>
+            <span class="kw">library</span>(<span class="st">&quot;biomaRt&quot;</span>) <span class="co">#For querying SNV functional consequences from ENSEMBL</span>
+            <span class="kw">library</span>(<span class="st">&quot;LDcorSV&quot;</span>) <span class="co">#For Linkage disequilibrium assessment</span>
+            <span class="kw">library</span>(<span class="st">&quot;doParallel&quot;</span>) <span class="co">#For parallel computing</span>
+            <span class="kw">library</span>(<span class="st">&quot;igraph&quot;</span>) <span class="co">#For SNV-SNV network construction</span>
+            <span class="kw">library</span>(<span class="st">&quot;ade4&quot;</span>) <span class="co">#For Principal components analysis of patients genotypes</span>
+            <span class="kw">library</span>(<span class="st">&quot;VennDiagram&quot;</span>) <span class="co">#For plotting Venn diagrams of prioritised variatns</span>
+
+
+            <span class="co">#Installation of cnmtf package from our github repository</span>
+
+            devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;lgl15/cnmtf&quot;</span>)
+
+
+            <span class="co">#Create a directory for your analysis</span>
+
+            <span class="kw">dir.create</span>(<span class="st">&quot;./test/&quot;</span>)
+
+            
+            
+<span class="co">#-------------------------------------------------</span>
+<span class="co"># 2. Preprocessing the data</span>
+<span class="co">#-------------------------------------------------</span>
+
+
+            <span class="co">#Find variants in high Linkage-disequilibrium</span>
+            
+            <span class="kw">find.snps.ld</span>( <span class="dt">file.LD =</span> <span class="st">&quot;./test/fileLD.RData&quot;</span>, <span class="co">#File to save results</span>
+                          <span class="dt">type.ld =</span> <span class="st">&quot;gene&quot;</span>, <span class="co">#Find LD within the same gene region</span>
+                          <span class="dt">tmap =</span> tmap, <span class="co">#Mapping of SNPs to genes, chr and genomic position </span>
+                          <span class="dt">R =</span> R) <span class="co">#Relationship matrix</span>
+
+
+            <span class="co">#Create SNV-SNV network</span>
+            
+            <span class="kw">create.network</span>( <span class="dt">net.type =</span> <span class="st">&quot;ppi&quot;</span>, <span class="co">#Type of reference network</span>
+                            <span class="dt">dedges =</span> dedges, <span class="co">#Object with edges from reference network</span>
+                        
+                            <span class="co">#Parameters for Linkage Disequilibrium</span>
+                            <span class="dt">remove.highLD =</span> <span class="ot">TRUE</span>,
+                            <span class="dt">ld.tao =</span> <span class="fl">0.8</span>, <span class="co">#Treshold of LD</span>
+                            <span class="dt">res.ld =</span> <span class="st">&quot;./test/fileLD.RData&quot;</span>, <span class="co">#Table of LD</span>
+                            
+                            <span class="co">#Parameters to construct Wu</span>
+                            <span class="dt">R.snps =</span> <span class="kw">rownames</span>(R), <span class="co">#List of SNPs in R</span>
+                            <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Working directory</span>
+                            <span class="dt">trait.project =</span> <span class="st">&quot;test&quot;</span>, <span class="co">#Trait</span>
+                            <span class="dt">n.cores =</span> <span class="dv">3</span>, <span class="co">#Number of cores for parallel computing</span>
+                            <span class="dt">tmap =</span> tmap, <span class="co">#Mapping of SNPs to genes</span>
+                            <span class="dt">plot.file =</span> <span class="st">&quot;Gu_ppi_test_venn.pdf&quot;</span> )
+
+
+
+<span class="co">#-------------------------------------------------</span>
+<span class="co"># 3. Running cNMTF</span>
+<span class="co">#-------------------------------------------------</span>
+            
+
+                <span class="kw">score.cnmtf</span>( <span class="dt">R =</span> R, <span class="co">#Relationship matrix</span>
+                             <span class="dt">out =</span> out, <span class="co">#Categorical outcome variable</span>
+                             <span class="dt">pop =</span> pop, <span class="co">#Population variable</span>
+                             <span class="dt">log.file =</span> <span class="st">&quot;logfile_my_experiment&quot;</span>, <span class="co">#Log-file to track the performance</span>
+            
+                             <span class="co">#Variables to Save/Load data and workspaces</span>
+                             <span class="dt">name.exp =</span> <span class="st">&quot;my_experiment&quot;</span>, <span class="co">#Name of experiment to save files</span>
+                             <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Folder to save and load workspaces</span>
+            
+                             <span class="co">#Number of clusters</span>
+                             <span class="dt">define.k =</span> <span class="st">&quot;method&quot;</span>, <span class="co">#Method to define k1</span>
+                             <span class="dt">k1 =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">15</span>,<span class="dv">20</span>), <span class="co">#Number of clusters of SNVs</span>
+                             <span class="dt">k2 =</span> <span class="kw">nlevels</span>(out), <span class="co">#Number of clusters of patients</span>
+            
+                             <span class="co">#Penalisation parameters</span>
+                             <span class="dt">wparameters =</span> <span class="kw">list</span>( <span class="dt">gamma1 =</span> <span class="fl">0.5</span>, <span class="co">#Weight for the SNV network, Lu</span>
+                                                 <span class="dt">gamma2 =</span> <span class="dv">1</span>, <span class="co">#Weight for the outcome matrix, Vo</span>
+                                                 <span class="dt">gamma3 =</span> <span class="dv">1</span>), <span class="co">#Weight for the kernel matrix, A</span>
+                             <span class="dt">save.parameters =</span> <span class="ot">TRUE</span>, <span class="co">#Save parameters to file</span>
+                             <span class="dt">run.t.par =</span> <span class="dv">4</span>, <span class="co">#Number of repetitions for parameters fitting</span>
+                             <span class="dt">max.try0 =</span> <span class="dv">4</span>,  <span class="co">#Maximum number of tries to fit the parameter</span>
+                             <span class="dt">snps.known =</span> <span class="ot">NULL</span>, <span class="co">#List of known SNV associated with the trait</span>
+            
+                             <span class="co">#Variables to control performance of the algorithm</span>
+                             <span class="dt">parallel.opt =</span> <span class="ot">TRUE</span>, <span class="co">#Run some instances of the algorithm in parallel</span>
+                             <span class="dt">n.cores =</span> <span class="dv">3</span>, <span class="co">#Number of cores to use in the parallel processing</span>
+                             <span class="dt">init =</span> <span class="dv">0</span>, <span class="co">#Type of seeding/initialisation of matrices in the algorithm</span>
+                             <span class="dt">do.U =</span> <span class="ot">TRUE</span>, <span class="co">#Perform clustering of SNPs</span>
+                             <span class="dt">calcObj =</span> <span class="dv">20</span>, <span class="co">#Check convergency every 20 iterations</span>
+                             <span class="dt">calcObj2 =</span> <span class="dv">40</span>, <span class="co">#Start checking convergency after first 40 iterations</span>
+                             <span class="dt">iters =</span> <span class="dv">300</span>, <span class="co">#Number of iterations</span>
+                             <span class="dt">run.t.exp =</span> <span class="dv">10</span>, <span class="co">#Number of repetitions for the experiment</span>
+                             <span class="dt">display.iters =</span> <span class="ot">FALSE</span>, <span class="co">#Display the iterations of function cnmtf</span>
+            
+                             <span class="co">#Randomisations</span>
+                             <span class="dt">score.pvalues =</span> <span class="ot">TRUE</span>, <span class="co">#Estimate p-values for the scores</span>
+                             <span class="dt">random.parallel =</span> <span class="ot">TRUE</span>, <span class="co">#Run each randomisation in parallel</span>
+                             <span class="dt">randomisations =</span> <span class="dv">100</span>, <span class="co">#Number of randomisations</span>
+            
+                             <span class="co">#Construction of penalisation terms</span>
+                             <span class="dt">file.Gu =</span> <span class="st">&quot;./test/Gu_ppi_test.RData&quot;</span> <span class="co">#Workspace with SNV-SNV network</span>
+            
+                        )
+
+
+
+
+<span class="co">#-------------------------------------------------</span>
+<span class="co"># 4. Prioritising SNVs</span>
+<span class="co">#-------------------------------------------------</span>
+
+
+        <span class="co">#Calculate the delta score and create Manhattan plots</span>
+
+            <span class="kw">analyze.cnmtf</span> (  <span class="dt">trait.project =</span> <span class="st">&quot;test&quot;</span>, <span class="co">#Trait under analysis</span>
+                             <span class="dt">name.exp =</span> <span class="kw">c</span>(<span class="st">&quot;my_experiment&quot;</span>, <span class="co">#Experiment under analysis </span>
+                             <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Folder with the results of score.cnmtf</span>
+                             <span class="dt">alpha.cnmtf =</span> <span class="fl">0.005</span>,   <span class="co">#Significance level of the scores</span>
+                             <span class="dt">d.conf =</span> <span class="ot">NULL</span>, <span class="co">#Optional. Confounder variables.</span>
+                             <span class="dt">snps.known =</span> <span class="ot">NULL</span>, <span class="co">#Optional. List of SNVs associated with the disease</span>
+                             <span class="dt">snps.known2 =</span> <span class="ot">NULL</span>, <span class="co">#Optional. A second list of SNVs.</span>
+                             <span class="dt">tmap =</span> <span class="ot">NULL</span>) <span class="co">#Mapping of SNPs to genes, chr and genomic position</span>
+
+
+        <span class="co">#Map variants to genes and add functional annotations</span>
+
+            <span class="dt">t.res =</span> <span class="kw">annotate.results</span>( <span class="dt">name.exp =</span> <span class="st">&quot;my_experiment&quot;</span>, <span class="co">#Define experiment id</span>
+                                      <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Working directory</span>
+                                      <span class="dt">add.david.annotations =</span> <span class="ot">TRUE</span>, <span class="co">#Use DAVID web service</span>
+                                      <span class="dt">email.david =</span> <span class="st">&quot;myemail@account.com&quot;</span>, <span class="co">#Email registered in DAVID.</span>
+                                      <span class="dt">add.ensemble.conseq =</span> <span class="ot">FALSE</span>, <span class="co">#Add SNV consequences from ENSEMBL</span>
+                                      <span class="dt">tmap =</span> tmap, <span class="co">#Mapping of SNPs to genes, chr and genomic position</span>
+                                      <span class="dt">file.LD =</span> <span class="st">&quot;./test/fileLD.RData&quot;</span>, <span class="co">#Workspace with pairwise LD</span>
+                                      <span class="dt">ld.tao =</span> <span class="fl">0.8</span> <span class="co">#Treshold of LD</span>
+                                      <span class="dt">snps.known =</span> <span class="ot">NULL</span>, <span class="co">#Optional. List of known associations.</span>
+                                      <span class="dt">snps.known2 =</span> <span class="ot">NULL</span>, <span class="co">#Optional. A second list of SNVs.</span>
+
+        <span class="co">#Extract table of prioritised variants</span>
+                                              
+            (<span class="dt">t.snvs =</span> t.res[[<span class="dv">1</span>]])</code></pre></div>
+<p><br></p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

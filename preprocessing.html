@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Your input data</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="preprocessing.html">Your input data</a>
+</li>
+<li>
+  <a href="running.html">Running cNMTF</a>
+</li>
+<li>
+  <a href="prioritising.html">Prioritising SNVs</a>
+</li>
+<li>
+  <a href="extras.html">Extras</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Your input data</h1>
+
+</div>
+
+
+<hr />
+<div id="description" class="section level2">
+<h2>Description</h2>
+<p>The algorithm takes four sources of data in the input:</p>
+<p><br></p>
+<p><img src="images/input_cnmtf.png" width="700px"></p>
+<p><br></p>
+<ul>
+<li><span class="math inline">\(R\)</span> is a relationship matrix for the <strong>genotyping data</strong>. This matrix encodes the number of copies of the recessive allele carried by the patients at each SNV.<br />
+</li>
+<li><span class="math inline">\(V_o\)</span> is an outcome matrix for the <strong>phenotyping data</strong>. This matrix encodes the categorical clinical outcome for each patient (<em>e.g.</em>, case or control).<br />
+</li>
+<li><span class="math inline">\(A\)</span> is a kernel similarity matrix encoding the <strong>population origin</strong> of the patients. This kernel captures the similarity between patients in the principal components space generated by <span class="math inline">\(R\)</span>.</li>
+<li><span class="math inline">\(L_U\)</span> is the Laplacian matrix of a <strong>SNV-SNV network</strong>. This network contains information about the genes harbouring the SNVs and the protein-protein interactions that might be disrupted by the SNVs’ deleteriousness effect.</li>
+</ul>
+<p><br></p>
+<hr />
+</div>
+<div id="the-relationship-matrix-r" class="section level2">
+<h2>The relationship matrix, <span class="math inline">\(R\)</span></h2>
+<p><br></p>
+<center>
+<img src="images/input_R.png" width="150px">
+</center>
+<p><br></p>
+<p>We set <span class="math inline">\(R_{(n \times m)}\)</span> to encode the genotypes of <span class="math inline">\(m\)</span> patients across <span class="math inline">\(n\)</span> SNVs under an additive genetic model. Thus, the entries of <span class="math inline">\(R\)</span> are 0, 1 or 2 depending on the number of recessive allele copies carried by the patient at a given SNV.</p>
+<p><br></p>
+<div id="constructing-the-relationship-matrix" class="section level3">
+<h3>Constructing the relationship matrix</h3>
+<p><br></p>
+<p>We cannot provide you with a function to contruct <span class="math inline">\(R\)</span> because the genotyping data format is highly variable and must be pre-processed depending on your research needs. Here we included a dummy example of this matrix (<code>data(R)</code>), and sketched some guidelines to create <span class="math inline">\(R\)</span> in your script:</p>
+<ol style="list-style-type: decimal">
+<li><p>Filter the variants and patients that you want to include in <span class="math inline">\(R\)</span>. Bearing in mind the memory RAM available in your machine, you could start the analysis with small matrices (<em>e.g.</em>, 1000 SNVs by 500 patients) and scale the process afterwards.</p></li>
+<li>Construct the relationship matrix considering <span class="math inline">\(G_{i,j}\)</span>, the genotype of patient <span class="math inline">\(j\)</span> in the SNV <span class="math inline">\(i\)</span> with alleles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. The entries of the matrix are:
+<ul>
+<li><span class="math inline">\(R_{i,j} = 0\)</span> if <span class="math inline">\(G_{i,j} = AA\)</span></li>
+<li><span class="math inline">\(R_{i,j} = 1\)</span> if <span class="math inline">\(G_{i,j} = AB\)</span></li>
+<li><span class="math inline">\(R_{i,j} = 2\)</span> if <span class="math inline">\(G_{i,j}= BB\)</span>.</li>
+</ul></li>
+<li><p>Store the matrix in an object called <code>R</code></p></li>
+</ol>
+<p>This matrix should look like:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">library</span>(cnmtf)
+  R[ <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span> ]</code></pre></div>
+<pre><code>##            patient.1 patient.2 patient.3 patient.4 patient.5
+## rs16845307         1         1         1         2         2
+## rs9384526          0         1         2         0         1
+## rs4135335          2         2         1         1         2
+## rs1652508          1         1         0         1         2
+## rs15895            2         2         2         2         2
+## rs11649508         2         2         2         2         2
+## rs7800039          0         0         0         0         0
+## rs6856276          2         0         1         1         2
+## rs135757           1         2         1         1         2
+## rs975230           1         2         2         0         2</code></pre>
+<p><br></p>
+</div>
+<div id="metadata-for-the-variants" class="section level3">
+<h3>Metadata for the variants</h3>
+<p><br></p>
+<p>It is important to keep meta information on the localisation of the variant:</p>
+<ol style="list-style-type: decimal">
+<li><p>Construct a data frame called <code>tmap</code> to map every variant with their gene (entrezid), the chromosome and the position of the SNV in the chromosome.</p></li>
+<li><p>Name the columns of <code>tmap</code> as:</p></li>
+</ol>
+<pre><code>    colnames(tmap) &lt;- c(&quot;refsnp_id&quot;,&quot;entrezgene&quot;,&quot;chr&quot;,&quot;position&quot;)</code></pre>
+<p>This dataframe should look like:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">head</span>(tmap)</code></pre></div>
+<pre><code>##       refsnp_id entrezgene chr  position
+## 2408 rs16845307      22871   3 173499419
+## 6019  rs9384526      57492   6 157464423
+## 5187  rs4135335       5468   3  12409733
+## 4497  rs1652508       4018   6 161048937
+## 6746    rs15895       6311  12 111932671
+## 717  rs11649508       1387  16   3927524</code></pre>
+<p><br></p>
+</div>
+<div id="find-variants-in-linkage-disequilibrium-ld" class="section level3">
+<h3>Find variants in Linkage-disequilibrium (LD)</h3>
+<p><br></p>
+<p>Variants in LD tend to obscure the signals of association from weak loci in cNMTF, so we only keep one variant representing a gene region in high LD.</p>
+<p>Use the function <code>find.snps.ld</code> to calculate LD between pairs of SNVs and save the results in a workspace <code>&quot;fileLD.RData&quot;</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    <span class="kw">library</span>(<span class="st">&quot;LDcorSV&quot;</span>)
+    cnmtf<span class="op">:::</span><span class="kw">find.snps.ld</span>( <span class="dt">file.LD =</span> <span class="st">&quot;./test/fileLD.RData&quot;</span>,  
+                          <span class="dt">type.ld =</span> <span class="st">&quot;gene&quot;</span>, 
+                          <span class="dt">tmap =</span> tmap, <span class="dt">R =</span> R)</code></pre></div>
+<p>The algorithm will read this workspace file and filter out the variants for you.</p>
+<p><br></p>
+<hr />
+</div>
+</div>
+<div id="the-outcome-matrix-for-the-phenotypes-v_o" class="section level2">
+<h2>The outcome matrix for the phenotypes, <span class="math inline">\(V_o\)</span></h2>
+<p><br></p>
+<center>
+<img src="images/input_Vo.png" width="150px">
+</center>
+<p><br></p>
+<p>The outcome matrix <span class="math inline">\(V_o\)</span> has dimmensions of <span class="math inline">\(m\)</span> patients by <span class="math inline">\(k_2\)</span> outcome categories. We set <span class="math inline">\(k_2 = 2\)</span> because we are studying binary outcomes or cases-control designs. The entries of this matrix are:</p>
+<ul>
+<li><span class="math inline">\(V_{o [j,1]} = 1\)</span> if patient <span class="math inline">\(j\)</span> is a control (<span class="math inline">\(V_{o [j,1]} = 0\)</span> otherwise)</li>
+<li><span class="math inline">\(V_{o [j,2]} = 1\)</span> if patient <span class="math inline">\(j\)</span> is a case (<span class="math inline">\(V_{o [j,2]} = 0\)</span> otherwise).</li>
+</ul>
+<p>To constuct this matrix you only need to define a categorical vector of outcomes, <code>out</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">head</span>(out)</code></pre></div>
+<pre><code>## [1] 0 0 1 0 0 0
+## Levels: 0 1</code></pre>
+<p>Now run the function <code>construct.Vo</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  Vo =<span class="st"> </span>cnmtf<span class="op">:::</span><span class="kw">construct.Vo</span>( <span class="dt">out =</span> out, <span class="dt">ki =</span> <span class="dv">2</span>)
+  <span class="kw">head</span>(Vo)</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    0
+## [2,]    1    0
+## [3,]    0    1
+## [4,]    1    0
+## [5,]    1    0
+## [6,]    1    0</code></pre>
+<p><br></p>
+<hr />
+</div>
+<div id="the-kernel-matrix-for-the-ancestry-a" class="section level2">
+<h2>The kernel matrix for the ancestry, <span class="math inline">\(A\)</span></h2>
+<p><br></p>
+<center>
+<img src="images/input_A.png" width="150px">
+</center>
+<p><br></p>
+<p>This is a predefined matrix (<span class="math inline">\(m \times m\)</span>) generated by a kernel function on the population of the patients. If the population origin is known we can fit the kernel matrix as:</p>
+<ul>
+<li><span class="math inline">\(A_{i,j} = 1\)</span> if patient <span class="math inline">\(i\)</span> and patient <span class="math inline">\(j\)</span> belong to the same population.</li>
+<li><span class="math inline">\(A_{i,j} = 0\)</span> otherwise.</li>
+</ul>
+<p>However, the population origin is frequently unknown, so it must be inferred via Principal Component Analysis (PCA). The kernel <span class="math inline">\(A\)</span> is defined by the similarity between patients in the principal components space <span class="math inline">\(A = RR^T / n\)</span>, using the function <code>kernels.cnmtf</code>:</p>
+<p><br></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  kernels =<span class="st"> </span>cnmtf<span class="op">:::</span><span class="kw">kernels.cnmtf</span>(<span class="dt">R =</span> R, <span class="dt">pop =</span> <span class="st">&quot;unknown&quot;</span>)
+
+ <span class="co">#This function returns the population origin kernel:</span>
+  A =<span class="st"> </span>kernels[[<span class="dv">2</span>]]
+  A[ <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##           patient.1 patient.2 patient.3 patient.4 patient.5
+## patient.1      2.35      2.03      2.08      2.03      2.10
+## patient.2      2.03      2.26      2.03      1.97      2.13
+## patient.3      2.08      2.03      2.49      2.07      2.26
+## patient.4      2.03      1.97      2.07      2.37      2.13
+## patient.5      2.10      2.13      2.26      2.13      2.71</code></pre>
+<p><br></p>
+<hr />
+</div>
+<div id="the-snv-snv-network-l_u" class="section level2">
+<h2>The SNV-SNV network, <span class="math inline">\(L_U\)</span></h2>
+<p><br></p>
+<center>
+<img src="images/input_Lu.png" width="150px">
+</center>
+<p><br></p>
+<p>Finally, we construct a SNV-SNV network containing information about the genes harbouring the SNVs and their protein-protein interactions (PPIs).</p>
+<p>You will need a table of edges from a PPI network (<em>e.g</em>, BioGrid). We included an example of this table, called <code>dedges</code>, containing the edges between pairs of proteins. The identifiers must be the entrezids of the genes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">head</span>(dedges)</code></pre></div>
+<pre><code>##      V2    V3
+## 1  9577   580
+## 2  1956  1499
+## 3   580   580
+## 4  8202  2033
+## 5  5468 10891
+## 6 10891  5468</code></pre>
+<p>Call the function <code>create.network</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;doParallel&#39;</span>)
+<span class="kw">library</span>(<span class="st">&#39;biomaRt&#39;</span>)
+<span class="kw">library</span>(<span class="st">&quot;igraph&quot;</span>)
+cnmtf<span class="op">:::</span><span class="kw">create.network</span>( <span class="dt">net.type =</span> <span class="st">&quot;ppi&quot;</span>, <span class="co">#Type of reference network</span>
+                        <span class="dt">dedges =</span> dedges, <span class="co">#Object with edges from reference network</span>
+                      
+                        <span class="co">#Parameters for Linkage Disequilibrium</span>
+                        <span class="dt">remove.highLD =</span> <span class="ot">TRUE</span>,
+                        <span class="dt">ld.tao =</span> <span class="fl">0.8</span>, <span class="co">#Treshold of LD</span>
+                        <span class="dt">res.ld =</span> <span class="st">&quot;./test/fileLD.RData&quot;</span>, <span class="co">#Table of LD</span>
+                        
+                        <span class="co">#Parameters to construct Wu</span>
+                        <span class="dt">R.snps =</span> <span class="kw">rownames</span>(R), <span class="co">#List of SNPs in R</span>
+                        <span class="dt">work.dat =</span> <span class="st">&quot;./test/&quot;</span>, <span class="co">#Working directory</span>
+                        <span class="dt">trait.project =</span> <span class="st">&quot;test&quot;</span>, <span class="co">#Trait</span>
+                        <span class="dt">n.cores =</span> <span class="dv">3</span>, <span class="co">#Number of cores for parallel computing</span>
+                        <span class="dt">tmap =</span> tmap, <span class="co">#Mapping of SNPs to genes</span>
+                        <span class="dt">plot.file =</span> <span class="st">&quot;Gu_ppi_test_venn.pdf&quot;</span> )</code></pre></div>
+<p>The results of this function will be saved in the working directory that you specify with <code>work.dat</code>. In this example, <code>work.dat = &quot;./test/&quot;</code>.</p>
+<p><br></p>
+<hr />
+<p>Your input data is ready so the next step is <a href="running.html">to run cNMTF</a> !</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+
+ 
+ Running experiment my_experiment 
+ 2018-04-19 11:45:16 
+Dimensions of input R: 100 50 
+ 2018-04-19 11:45:16 
+
+ Setting numbers of clusters by  method 
+ 2018-04-19 11:45:16 
+Random initialisation of matrices U and V 
+ 2018-04-19 11:45:16 
+Evaluating setting: k1 =  20 , k2 =  2 
+ 2018-04-19 11:45:16 
+Evaluating setting: k1 =  15 , k2 =  2 
+ 2018-04-19 11:45:16 
+Evaluating setting: k1 =  10 , k2 =  2 
+ 2018-04-19 11:45:17 
+Evaluating setting: k1 =  8 , k2 =  2 
+ 2018-04-19 11:45:17 
+Evaluating setting: k1 =  5 , k2 =  2 
+ 2018-04-19 11:45:17 
+Evaluating setting: k1 =  3 , k2 =  2 
+ 2018-04-19 11:45:17 
+Evaluating setting: k1 =  2 , k2 =  2 
+ 2018-04-19 11:45:17 
