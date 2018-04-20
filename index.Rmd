@@ -3,7 +3,7 @@
 
 ---
 title: "Prioritisation of disease-associated variants with cNMTF"
-author: "[Centre for Integrative Systems Biology and Bioinfomatics](http://www.imperial.ac.uk/integrative-systems-biology)
+author: "[Centre for Integrative Systems Biology and Bioinformatics](http://www.imperial.ac.uk/integrative-systems-biology)
 - [Imperial College London](http://www.imperial.ac.uk)"
 output:
   html_document:
@@ -19,7 +19,7 @@ output:
 
 
 body{
-  font-size: 15pt !important;;
+  font-size: 13pt !important;;
 }
 </style>
 

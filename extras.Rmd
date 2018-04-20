@@ -11,7 +11,7 @@ output:
 <style type="text/css">
 
 body{
-  font-size: 15pt !important;;
+  font-size: 13pt !important;;
 }
 </style>
 

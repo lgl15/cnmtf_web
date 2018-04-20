@@ -328,7 +328,7 @@ div.tocify {
 <style type="text/css">
 
 body{
-  font-size: 15pt !important;;
+  font-size: 13pt !important;;
 }
 </style>
 <hr />
@@ -452,7 +452,7 @@ body{
 </div>
 <div id="creating-randomised-results" class="section level3">
 <h3>Creating randomised results</h3>
-<p>After finishing the main clustering step, the algorithm has the option of factorising randomisations of <span class="math inline">\(R\)</span>, by using the same optimal parameters. We will use these randomisations later to estimate p-values for the SNV scores. You must define whether the randomisations are conducted with <code>score.pvalues = T</code>, the number of them: <code>randomisations = 100</code> and if running each of them in parallel working in parallel (<code>random.parallel = TRUE</code>).</p>
+<p>After finishing the main clustering step, the algorithm has the option of factorising randomisations of <span class="math inline">\(R\)</span>, by using the same optimal parameters. We will use these randomisations later to estimate p-values for the SNV scores. You must define whether the randomisations are conducted with <code>score.pvalues = T</code>, the total number : <code>randomisations = 100</code> and whether they are computed in parallel (<code>random.parallel = TRUE</code>).</p>
 <hr />
 <p>To this point, the algorithm has processed your data and directed its outputs to “./test/”. Your workspace is now ready for <a href="prioritising.html">prioritising variants</a>.</p>
 </div>

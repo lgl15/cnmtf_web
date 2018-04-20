@@ -12,7 +12,7 @@ output:
 <style type="text/css">
 
 body{
-  font-size: 15pt !important;;
+  font-size: 13pt !important;;
 }
 </style>
 
@@ -191,7 +191,7 @@ At each repetition, the algorithm will minimise an objective function. This proc
 
 ### Creating randomised results
 
-After finishing the main clustering step, the algorithm has the option of factorising  randomisations of $R$, by using the same optimal parameters. We will use these randomisations later to estimate p-values for the SNV scores. You must define whether the randomisations are conducted with `score.pvalues = T`, the number of them: `randomisations = 100` and if running each of them in parallel working in parallel (`random.parallel = TRUE`).
+After finishing the main clustering step, the algorithm has the option of factorising  randomisations of $R$, by using the same optimal parameters. We will use these randomisations later to estimate p-values for the SNV scores. You must define whether the randomisations are conducted with `score.pvalues = T`, the total number : `randomisations = 100` and whether they are computed in parallel  (`random.parallel = TRUE`).
 
 ---- 
 
