@@ -42,11 +42,11 @@ This `R` script links together the most relevant functions for  [preprocessing d
 #-------------------------------------------------
 
 
-			#Clean your current workspace
+			# Clean your current workspace
 
 			rm(list=ls()) ; gc()
 
-			#Load libraries
+			# Load libraries
 
 			library("devtools") #For the installation of cnmtf package
 			library("biomaRt") #For querying SNV functional consequences from ENSEMBL
@@ -55,14 +55,16 @@ This `R` script links together the most relevant functions for  [preprocessing d
 			library("igraph") #For SNV-SNV network construction
 			library("ade4") #For Principal components analysis of patients genotypes
 			library("VennDiagram") #For plotting Venn diagrams of prioritised variatns
+			library("snpStats") #For plotting QQplots in genomic control of population structure
+			library("ComplexHeatmap") #For plotting heatmaps of cluster membership
+			library("RDAVIDWebService") #For annotating the SNVs and genes with functional data
 
-
-			#Installation of cnmtf package from our github repository
+			# Installation of cnmtf package from our github repository
 
 			devtools::install_github("lgl15/cnmtf")
 
 
-			#Create a directory for your analysis
+			# Create a directory for your analysis
 
 			dir.create("./test/")
 
@@ -73,7 +75,7 @@ This `R` script links together the most relevant functions for  [preprocessing d
 #-------------------------------------------------
 
 
-			#Find variants in high Linkage-disequilibrium
+			# Find variants in high Linkage-disequilibrium
 			
 			find.snps.ld( file.LD = "./test/fileLD.RData", #File to save results
 			              type.ld = "gene", #Find LD within the same gene region
@@ -81,7 +83,7 @@ This `R` script links together the most relevant functions for  [preprocessing d
 			              R = R) #Relationship matrix
 
 
-			#Create SNV-SNV network
+			# Create SNV-SNV network
 			
 			create.network( net.type = "ppi", #Type of reference network
 			                dedges = dedges, #Object with edges from reference network
@@ -116,8 +118,8 @@ This `R` script links together the most relevant functions for  [preprocessing d
             				 work.dat = "./test/", #Folder to save and load workspaces
             
             				 #Number of clusters
-            				 define.k = "method", #Method to define k1
-            				 k1 = c(2,3,5,8,10,15,20), #Number of clusters of SNVs
+            				 define.k = "user", #Method to define k1
+            				 k1 = 10, #Number of clusters of SNVs
             				 k2 = nlevels(out), #Number of clusters of patients
             
             				 #Penalisation parameters
@@ -158,30 +160,32 @@ This `R` script links together the most relevant functions for  [preprocessing d
 #-------------------------------------------------
 
 
-		#Calculate the delta score and create Manhattan plots
+		# Calculate the delta score and create Manhattan plots
 
             analyze.cnmtf (  trait.project = "test", #Trait under analysis
-                			 name.exp = c("my_experiment", #Experiment under analysis 
+                			 name.exp = "my_experiment", #Experiment under analysis 
                 			 work.dat = "./test/", #Folder with the results of score.cnmtf
                 			 alpha.cnmtf = 0.005,	#Significance level of the scores
                 			 d.conf = NULL, #Optional. Confounder variables.
                 			 snps.known = NULL, #Optional. List of SNVs associated with the disease
                 			 snps.known2 = NULL, #Optional. A second list of SNVs.
-                			 tmap = NULL) #Mapping of SNPs to genes, chr and genomic position
+                			 tmap = tmap) #Mapping of SNPs to genes, chr and genomic position
 
 
-		#Map variants to genes and add functional annotations
+		# Map variants to genes and add functional annotations
+		# Your email account must be registered in the The Database for Annotation, Visualization and Integrated Discovery (DAVID ) [https://david.ncifcrf.gov/webservice/register.htm]
 
-            t.res = annotate.results( name.exp = "my_experiment", #Define experiment id
-                                      work.dat = "./test/", #Working directory
-                                      add.david.annotations = TRUE, #Use DAVID web service
-                                      email.david = "myemail@account.com", #Email registered in DAVID.
-                                      add.ensemble.conseq = FALSE, #Add SNV consequences from ENSEMBL
-                                      tmap = tmap, #Mapping of SNPs to genes, chr and genomic position
-                                      file.LD = "./test/fileLD.RData", #Workspace with pairwise LD
-                                      ld.tao = 0.8 #Treshold of LD
-                                      snps.known = NULL, #Optional. List of known associations.
-                                      snps.known2 = NULL, #Optional. A second list of SNVs.
+            t.res = annotate.results( trait.project = "test", #Trait under analysis
+										name.exp = "my_experiment", #Experiment under analysis 
+		                                work.dat = "./test/", #Working directory
+		                                add.david.annotations = TRUE, #Use DAVID web service
+		                                email.david = "email@example.com", #Email registered in DAVID.
+		                                add.ensemble.conseq = FALSE, #Add SNV consequences from ENSEMBL
+		                                tmap = tmap, #Mapping of SNPs to genes, chr and genomic position
+		                                file.LD = "./test/fileLD.RData", #Workspace with pairwise LD
+		                                ld.tao = 0.8, #Treshold of LD
+		                                snps.known = NULL, #Optional. List of known associations.
+		                                snps.known2 = NULL) #Optional. A second list of SNVs.
 
 		#Extract table of prioritised variants
                                               
