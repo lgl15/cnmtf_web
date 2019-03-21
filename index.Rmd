@@ -75,7 +75,7 @@ Auxiliary functions to compare your results across different settings of the alg
 
 ## Citation
 
-Luis G. Leal,	Alessia David, [NFBC investigators], Clive Hoggart, Michael J.E. Sternberg. (2018) *Prioritisation of disease-associated variants in cohorts of diverse ancestry using a matrix factorisation framework.* 
+Luis G. Leal,	Alessia David, [NFBC investigators], Clive Hoggart, Michael J.E. Sternberg. (2019) *Identification of disease-associated loci using machine learning for genotype and network data integration.* 
 
 <br>
 
@@ -83,7 +83,7 @@ Luis G. Leal,	Alessia David, [NFBC investigators], Clive Hoggart, Michael J.E. S
 Luis G. Leal, lgl15@imperial.ac.uk   
 Centre for Integrative Systems Biology and Bioinfomatics (CISBIO)  
 Department of Life Sciences  
-Imperial College London
+Imperial College London, London, UK, SW7 2AZ
 
 
 
