@@ -2,7 +2,7 @@
 
 
 ---
-title: "Prioritisation of disease-associated variants with cNMTF"
+title: "Prioritisation of disease-associated genes with cNMTF"
 author: "[Centre for Integrative Systems Biology and Bioinformatics](http://www.imperial.ac.uk/integrative-systems-biology)
 - [Imperial College London](http://www.imperial.ac.uk)"
 output:
@@ -29,7 +29,7 @@ body{
 
 <br>
 
-cNMTF is a data fusion framework for prioritising reliable associations between single nucleotide variants (SNVs) and diseases. **In this webpage you will find the step-by-step process to run the algorithm on your own data using R scripts.**
+cNMTF is a data fusion framework for prioritising reliable associations between single nucleotide variants (SNVs), genes and diseases. **In this webpage you will find the step-by-step process to run the algorithm on your own data using R scripts.**
 
 <br>
 
@@ -75,7 +75,7 @@ Auxiliary functions to compare your results across different settings of the alg
 
 ## Citation
 
-Luis G. Leal,	Alessia David, [NFBC investigators], Clive Hoggart, Michael J.E. Sternberg. (2019) *Identification of disease-associated loci using machine learning for genotype and network data integration.* 
+Leal, L.G., David, A., Jarvelin, M.-R., Sebert, S., Männikkö, M., Karhunen, V., Seaby, E., Hoggart, C., and Sternberg, M.J.E. (2019). **Identification of disease-associated loci using machine learning for genotype and network data integration.** *Bioinformatics*, btz310 (https://doi.org/10.1093/bioinformatics/btz310)
 
 <br>
 
